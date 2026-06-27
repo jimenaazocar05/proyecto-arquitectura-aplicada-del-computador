@@ -1,0 +1,25 @@
+# Entorno virtual
+venv/
+env/
+*.pyc
+__pycache__/
+
+# Archivos de audio (pesados, no van al repositorio)
+grabaciones/
+pruebas/
+*.wav
+
+# Modelos entrenados (se regeneran)
+modelos/*.pkl
+
+# Resultados generados
+resultados/
+
+# Configuración del editor
+.vscode/
+.idea/
+*.swp
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

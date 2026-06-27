@@ -58,6 +58,3 @@ reconocimiento_voz/
 - [ ] Etapa 5: Funcionamiento en tiempo real
 - [ ] Etapa 6: Comunicación serial con Arduino
 
-## Autor
-
-Jimena Azocar — UCAB

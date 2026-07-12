@@ -51,7 +51,7 @@ reconocimiento_voz/
 ## Estado del desarrollo
 
 - [x] Etapa 0: Preparación del entorno
-- [ ] Etapa 1: Captura de audio
+- [x] Etapa 1: Captura de audio
 - [ ] Etapa 2: Extracción MFCC
 - [ ] Etapa 3: Entrenamiento GMM
 - [ ] Etapa 4: Identificación de locutor

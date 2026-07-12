@@ -26,6 +26,7 @@ DURACION_GRABACION = 3.0           # segundos
 # LOCUTORES
 # ============================================================
 NUMERO_MAXIMO_LOCUTORES = 20
+NUMERO_LOCUTORES_ACTIVOS = 3       # Locutores actualmente en uso
 MUESTRAS_POR_LOCUTOR = 10          # Se ajusta según pruebas
 
 # ============================================================

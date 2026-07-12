@@ -60,3 +60,21 @@ COEF_PREENFASIS = 0.97              # Coeficiente del filtro de pre-énfasis
 APLICAR_CMN = True                  # Cepstral Mean Normalization
 APLICAR_VAD = True                  # Voice Activity Detection simple
 UMBRAL_VAD_DB = -35                 # Umbral en dB para detectar silencio
+
+# ============================================================
+# PARÁMETROS DEL MODELO GMM
+# ============================================================
+NUM_COMPONENTES_GMM = 16            # Componentes gaussianos por modelo individual
+NUM_COMPONENTES_UBM = 32            # Componentes para el modelo universal
+TIPO_COVARIANZA = "diag"            # "diag" | "full" | "tied" | "spherical"
+MAX_ITERACIONES_EM = 200            # Iteraciones máximas del algoritmo EM
+TOLERANCIA_CONVERGENCIA = 1e-3      # Umbral de parada del EM
+METODO_INICIALIZACION = "kmeans"    # "kmeans" | "random"
+SEMILLA_ALEATORIA = 42              # Reproducibilidad
+
+# ============================================================
+# ENTRENAMIENTO
+# ============================================================
+MIN_MUESTRAS_POR_LOCUTOR = 3        # Mínimo aceptable para entrenar
+NOMBRE_MODELO_UBM = "ubm.pkl"       # Nombre del archivo del UBM
+NOMBRE_LOG_ENTRENAMIENTO = "log_entrenamiento.json"

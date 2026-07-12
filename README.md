@@ -53,7 +53,7 @@ reconocimiento_voz/
 - [x] Etapa 0: Preparación del entorno
 - [x] Etapa 1: Captura de audio
 - [x] Etapa 2: Extracción MFCC
-- [ ] Etapa 3: Entrenamiento GMM
+- [x] Etapa 3: Entrenamiento GMM
 - [ ] Etapa 4: Identificación de locutor
 - [ ] Etapa 5: Funcionamiento en tiempo real
 - [ ] Etapa 6: Comunicación serial con Arduino

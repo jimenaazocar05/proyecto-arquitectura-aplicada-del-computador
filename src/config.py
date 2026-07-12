@@ -35,3 +35,28 @@ MUESTRAS_POR_LOCUTOR = 10          # Se ajusta según pruebas
 # None = usar dispositivo por defecto del sistema.
 # Cambiar por el índice devuelto por sd.query_devices() si es necesario.
 DISPOSITIVO_ENTRADA = None
+
+# ============================================================
+# PARÁMETROS DE EXTRACCIÓN MFCC
+# ============================================================
+NUM_MFCC = 13                       # Número de coeficientes cepstrales
+USAR_DELTAS = True                  # Incluir derivadas de primer orden
+USAR_DELTA_DELTAS = False           # Incluir derivadas de segundo orden
+
+LONGITUD_TRAMA_MS = 25              # Longitud de cada trama en milisegundos
+SOLAPE_TRAMA_MS = 10                # Solape entre tramas en milisegundos
+
+# Derivados (se calculan a partir de FRECUENCIA_MUESTREO)
+LONGITUD_TRAMA_MUESTRAS = int(FRECUENCIA_MUESTREO * LONGITUD_TRAMA_MS / 1000)
+SOLAPE_TRAMA_MUESTRAS = int(FRECUENCIA_MUESTREO * SOLAPE_TRAMA_MS / 1000)
+
+# Parámetros del banco de filtros
+NUM_FILTROS_MEL = 26                # Número de filtros triangulares Mel
+COEF_PREENFASIS = 0.97              # Coeficiente del filtro de pre-énfasis
+
+# ============================================================
+# PREPROCESAMIENTO
+# ============================================================
+APLICAR_CMN = True                  # Cepstral Mean Normalization
+APLICAR_VAD = True                  # Voice Activity Detection simple
+UMBRAL_VAD_DB = -35                 # Umbral en dB para detectar silencio

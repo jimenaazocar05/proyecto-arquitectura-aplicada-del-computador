@@ -78,3 +78,20 @@ SEMILLA_ALEATORIA = 42              # Reproducibilidad
 MIN_MUESTRAS_POR_LOCUTOR = 3        # Mínimo aceptable para entrenar
 NOMBRE_MODELO_UBM = "ubm.pkl"       # Nombre del archivo del UBM
 NOMBRE_LOG_ENTRENAMIENTO = "log_entrenamiento.json"
+
+# ============================================================
+# PARÁMETROS DEL IDENTIFICADOR
+# ============================================================
+USAR_LLR = True                     # True: LLR (score - UBM). False: LL directo.
+UMBRAL_DESCONOCIDO = -0.10            # LLR mínimo para aceptar identificación
+ID_DESCONOCIDO = 0                  # ID reservado para locutor desconocido
+
+# ============================================================
+# EVALUACIÓN
+# ============================================================
+NOMBRE_MATRIZ_CONFUSION_PNG = "matriz_confusion.png"
+NOMBRE_REPORTE_EVALUACION = "reporte_evaluacion.json"
+
+# Rango de umbrales a probar durante la calibración
+UMBRALES_CALIBRACION = [i * 0.1 for i in range(-10, 21)]   # -1.0 a 2.0 en pasos de 0.1
+

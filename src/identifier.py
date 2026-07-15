@@ -127,6 +127,57 @@ class Identificador:
             es_desconocido=es_desconocido,
         )
 
+    def identificar_audio(self, audio: np.ndarray) -> ResultadoIdentificacion:
+        """
+        Identifica al locutor a partir de un array de audio en memoria.
+        Usa el mismo pipeline que identificar() pero sin pasar por archivo.
+
+        Parámetros
+        ----------
+        audio : np.ndarray
+            Array 1D de audio a la frecuencia de muestreo del proyecto.
+
+        Retorna
+        -------
+        ResultadoIdentificacion
+        """
+        from src.preprocesamiento import preprocesar
+        from src.feature_extractor import (
+            extraer_mfcc_basico, calcular_deltas, normalizar_cmn,
+        )
+        from src.config import USAR_DELTAS, USAR_DELTA_DELTAS, APLICAR_CMN
+
+        # Pipeline igual al de la Etapa 2, pero sobre array en memoria
+        audio_proc = preprocesar(audio)
+        mfcc = extraer_mfcc_basico(audio_proc)
+        features = mfcc
+
+        if USAR_DELTAS:
+            features = np.concatenate([features, calcular_deltas(mfcc)], axis=1)
+
+        if USAR_DELTA_DELTAS:
+            from src.feature_extractor import calcular_delta_deltas
+            features = np.concatenate([features, calcular_delta_deltas(mfcc)], axis=1)
+
+        if APLICAR_CMN:
+            features = normalizar_cmn(features)
+
+        # Reutilizar la lógica existente de scoring y decisión
+        scores = self._calcular_scores(features)
+        id_mejor = max(scores, key=scores.get)
+        llr_max = scores[id_mejor]
+
+        es_desconocido = llr_max < self.umbral
+        id_predicho = ID_DESCONOCIDO if es_desconocido else id_mejor
+
+        return ResultadoIdentificacion(
+            id_predicho=id_predicho,
+            llr_maximo=llr_max,
+            id_mejor_candidato=id_mejor,
+            scores=scores,
+            es_desconocido=es_desconocido,
+        )
+
 
 # ============================================================
 # INTERFAZ DE LÍNEA DE COMANDOS

@@ -95,3 +95,17 @@ NOMBRE_REPORTE_EVALUACION = "reporte_evaluacion.json"
 # Rango de umbrales a probar durante la calibración
 UMBRALES_CALIBRACION = [i * 0.1 for i in range(-10, 21)]   # -1.0 a 2.0 en pasos de 0.1
 
+# ============================================================
+# TIEMPO REAL Y VAD
+# ============================================================
+FRAME_VAD_MS = 30                       # Frame de análisis del VAD
+UMBRAL_ENERGIA_VAD = 0.02               # Umbral RMS para detectar voz
+DURACION_MINIMA_VOZ_MS = 300            # Mínimo de voz para considerarla enunciado
+SILENCIO_FIN_ENUNCIADO_MS = 700         # Silencio que marca el fin
+DURACION_MAXIMA_ENUNCIADO_S = 5.0       # Corte de seguridad
+DURACION_MINIMA_ENUNCIADO_S = 1.0       # Descarta tosidos y palabras sueltas
+BUFFER_PREVIO_MS = 300                  # Buffer circular pre-VAD
+
+# Derivados
+FRAME_VAD_MUESTRAS = int(FRECUENCIA_MUESTREO * FRAME_VAD_MS / 1000)
+

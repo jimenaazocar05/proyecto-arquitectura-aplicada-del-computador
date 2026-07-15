@@ -109,3 +109,13 @@ BUFFER_PREVIO_MS = 300                  # Buffer circular pre-VAD
 # Derivados
 FRAME_VAD_MUESTRAS = int(FRECUENCIA_MUESTREO * FRAME_VAD_MS / 1000)
 
+# ============================================================
+# COMUNICACIÓN SERIAL CON ARDUINO
+# ============================================================
+PUERTO_SERIAL = "COM3"                # Windows: COM3, COM4... | Linux: /dev/ttyUSB0
+BAUDIOS_SERIAL = 9600
+TIMEOUT_SERIAL_S = 1.0
+DELAY_RECONEXION_S = 2.0
+CABECERA_TRAMA = 0xAA
+DEBUG_SERIAL = True                   # Si True, imprime en consola cada envío
+

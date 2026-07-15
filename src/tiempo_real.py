@@ -9,6 +9,7 @@ import numpy as np
 from src.detector_enunciados import DetectorEnunciados
 from src.identifier import Identificador
 from src.config import FRECUENCIA_MUESTREO, ID_DESCONOCIDO
+from src.serial_comm import ComunicacionArduino
 
 
 class SistemaTiempoReal:
@@ -21,8 +22,18 @@ class SistemaTiempoReal:
         self.identificador = Identificador(verbose=False)
         self.detector = DetectorEnunciados(callback=self._al_detectar_enunciado)
         self.contador = 0
+
         print(f"  {len(self.identificador.modelos)} locutores cargados.")
         print(f"  Umbral de decisión: {self.identificador.umbral:.3f}")
+
+        # Conexión al Arduino
+        print("\nConectando al Arduino...")
+        self.arduino = ComunicacionArduino()
+        if self.arduino.conectar():
+            print("  Arduino conectado.")
+        else:
+            print("  AVISO: Arduino no disponible. El sistema funcionará solo en consola.")
+
         print()
 
     def _al_detectar_enunciado(self, audio: np.ndarray):
@@ -47,7 +58,6 @@ class SistemaTiempoReal:
 
         reset = "\033[0m"
 
-        # Salida en consola
         print(
             f"[Enunciado #{self.contador:03d}] "
             f"duración={duracion:.2f}s | "
@@ -55,6 +65,13 @@ class SistemaTiempoReal:
             f"LLR={resultado.llr_maximo:+.3f}"
         )
         print(f"{color}  →  ID = {id_output:02d}  ({etiqueta}){reset}")
+
+        # Enviar al Arduino
+        if self.arduino.esta_conectado():
+            exito = self.arduino.enviar_id(id_output)
+            if not exito:
+                print(f"  [AVISO] No se pudo enviar al Arduino, se intentará reconectar.")
+
         print()
 
     def iniciar(self):
@@ -63,11 +80,15 @@ class SistemaTiempoReal:
         print("  SISTEMA DE IDENTIFICACIÓN DE VOZ EN TIEMPO REAL")
         print("=" * 60)
         print()
-        print("Habla al micrófono. El sistema identificará al locutor.")
+        print("Habla al micrófono. El sistema identificará al locutor")
+        print("y mostrará el resultado en los displays físicos.")
         print("Pulsa Ctrl+C para detener.")
         print()
 
-        self.detector.escuchar()
+        try:
+            self.detector.escuchar()
+        finally:
+            self.arduino.desconectar()
 
 
 if __name__ == "__main__":

@@ -3,13 +3,35 @@ Bucle principal del sistema en tiempo real.
 Escucha el micrófono, detecta enunciados, identifica y muestra el resultado.
 """
 
+import json
 import time
+import urllib.request
 import numpy as np
 
 from src.detector_enunciados import DetectorEnunciados
 from src.identifier import Identificador
-from src.config import FRECUENCIA_MUESTREO, ID_DESCONOCIDO
+from src.config import (
+    FRECUENCIA_MUESTREO,
+    ID_DESCONOCIDO,
+    NOMBRES_LOCUTORES,
+    HOST_WEB,
+    PUERTO_WEB,
+)
 from src.serial_comm import ComunicacionArduino
+
+
+def notificar_web(id_locutor: int, nombre: str):
+    try:
+        data = json.dumps({"id": id_locutor, "nombre": nombre}).encode()
+        req = urllib.request.Request(
+            f"http://{HOST_WEB}:{PUERTO_WEB}/detectar",
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        urllib.request.urlopen(req, timeout=0.5)
+    except Exception:
+        pass
 
 
 class SistemaTiempoReal:
@@ -65,6 +87,10 @@ class SistemaTiempoReal:
             f"LLR={resultado.llr_maximo:+.3f}"
         )
         print(f"{color}  →  ID = {id_output:02d}  ({etiqueta}){reset}")
+
+        # Notificar al frontend web
+        nombre = NOMBRES_LOCUTORES.get(id_output, f"Locutor {id_output:02d}")
+        notificar_web(id_output, nombre)
 
         # Enviar al Arduino
         if self.arduino.esta_conectado():

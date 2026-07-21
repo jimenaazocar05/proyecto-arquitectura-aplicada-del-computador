@@ -112,10 +112,22 @@ FRAME_VAD_MUESTRAS = int(FRECUENCIA_MUESTREO * FRAME_VAD_MS / 1000)
 # ============================================================
 # COMUNICACIÓN SERIAL CON ARDUINO
 # ============================================================
-PUERTO_SERIAL = "COM3"                # Windows: COM3, COM4... | Linux: /dev/ttyUSB0
+PUERTO_SERIAL = "/dev/ttyACM0"                # Windows: COM3, COM4... | Linux: /dev/ttyUSB0
 BAUDIOS_SERIAL = 9600
 TIMEOUT_SERIAL_S = 1.0
 DELAY_RECONEXION_S = 2.0
 CABECERA_TRAMA = 0xAA
 DEBUG_SERIAL = True                   # Si True, imprime en consola cada envío
+
+# ============================================================
+# FRONTEND WEB — Nombres para mostrar en el navegador
+# ============================================================
+NOMBRES_LOCUTORES = {
+    0: "Desconocido",
+    1: "Locutor 01",
+    2: "Locutor 02",
+    3: "Locutor 03",
+}
+PUERTO_WEB = 8080
+HOST_WEB = "localhost"
 
